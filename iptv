@@ -1,0 +1,8 @@
+#!/bin/bash
+source ./_ffmpeg
+
+ffmpeg_input_options["-i"] = "$1"
+
+ffmpeg -re -i "$1" -vcodec copy -preset ultrafast -tune zerolatency -maxrate 10000k -bufsize 20000k -pix_fmt yuv420p -g 60 -f mp4 -movflags frag_keyframe+faststart+empty_moov -max_muxing_queue_size 9999 -listen 1 http://0.0.0.0:5000/stream
+
+ffmpeg "${ffmpeg_options[@]}" "${ffmpeg_input_options[@]}" "${ffmpeg_output_options[@]}"$url

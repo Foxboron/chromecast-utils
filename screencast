@@ -1,0 +1,2 @@
+#!/bin/bash
+ffmpeg -re -f x11grab -s "$1" -i :0.0+0,0 -vcodec libx264 -preset ultrafast -tune zerolatency -maxrate 10000k -bufsize 20000k -g 60 -f mp4 -movflags frag_keyframe+faststart -max_muxing_queue_size 9999 -listen 1 http://0.0.0.0:5000/stream

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+declare -a ffmpeg_options=()
+ffmpeg_options+=(-re)
+
+declare -a options=(-i - -vcodec lib264 -pix_fmt yuv420p)
+# Examples:
+# options=(-i - -c copy)
+# options=(-i "$1" -vcodec copy)
+
+
+declare -a ffmpeg_input_file=()
+
+declare -a ffmpeg_input_options=()
+ffmpeg_input_options+=(-preset ultrafast -tune zerolatency \
+                       -maxrate 10000K -bufsize 20000K  -g 60)
+
+declare -a ffmpeg_output_options=()
+ffmpeg_output_options+=(-f mp4 -movflags frag_keyframe+faststart -max_muxing_queue_size 9999 -listen 1)
+
+url="http://0.0.0.0:5000/stream"
+
+
+ffmpeg_wrapper() {
+    ffmpeg "${ffmpeg_options[@]}" "${options[@]}" "${ffmpeg_input_options[@]}" "${ffmpeg_output_options[@]}" "$url"
+}

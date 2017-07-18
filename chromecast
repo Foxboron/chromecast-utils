@@ -1,0 +1,14 @@
+#!/bin/python
+import pychromecast
+import socket
+hostname = socket.gethostname()
+IP = socket.gethostbyname(hostname)
+print("IP: {}".format(IP))
+chromecasts = pychromecast.get_chromecasts()
+print("Using chromecast {}".format(chromecasts[0].name))
+mc = chromecasts[0].media_controller
+url = "http://{}:5000/stream".format(IP)
+print("Streaming URL: {}".format(url))
+mc.play_media(url, "video/mp4")
+mc.block_until_active()
+print(mc.status)

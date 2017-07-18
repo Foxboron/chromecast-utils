@@ -1,0 +1,7 @@
+#!/bin/bash
+# pactl load-module module-null-sink sink_name=chromecast
+# pacmd update-sink-proplist chromecast device.description=chromecast
+gst-launch-1.0 -e pulsesrc device="chromecast.monitor" ! audioconvert ! flacenc quality=1 ! oggmux ! filesink location=/dev/stdout | \
+ffmpeg -f flac -i - -f flac -acodec flac -ac 2 -ar 96000 -b:a 192K -listen 1 http://0.0.0.0:5000/stream
+# ffmpeg -i - -acodec mp3 -f mp3 -listen 1 http://0.0.0.0:5000/stream
+# pactl unload-module module-null-sink

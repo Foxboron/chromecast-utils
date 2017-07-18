@@ -1,0 +1,5 @@
+#!/bin/bash
+source ./_ffmpeg
+declare -a options
+options=(-i - -c copy)
+youtube-dl -q -o - "https://twitch.tv/$1" | ffmpeg_wrapper
