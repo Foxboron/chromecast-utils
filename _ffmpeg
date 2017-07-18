@@ -20,7 +20,6 @@ ffmpeg_output_options+=(-f mp4 -movflags frag_keyframe+faststart -max_muxing_que
 
 url="http://0.0.0.0:5000/stream"
 
-
 ffmpeg_wrapper() {
     ffmpeg "${ffmpeg_options[@]}" "${options[@]}" "${ffmpeg_input_options[@]}" "${ffmpeg_output_options[@]}" "$url"
 }
